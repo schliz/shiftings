@@ -20,7 +20,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import CreateView, DetailView, TemplateView, UpdateView
 
 from shiftings.accounts.forms.user_form import UserCreateForm, UserUpdateForm
-from shiftings.accounts.models import User
+from shiftings.accounts.models import CalendarToken, User
 from shiftings.accounts.token import email_confirm_token_generator
 from shiftings.shifts.models import Shift
 from shiftings.shifts.utils.filter_mixin import ShiftFilterMixin
@@ -48,6 +48,18 @@ class UserProfileView(BaseLoginMixin, ShiftFilterMixin, DetailView):
                                            Q(organization__in=self.object.organizations) |
                                            Q(participants__user=self.object))).distinct()
         context['shifts'] = get_pagination_context(self.request, shifts.filter(self.get_filters()), 5, 'shifts')
+
+        try:
+            calendar_token = CalendarToken.objects.get(user=self.object)
+        except CalendarToken.DoesNotExist:
+            calendar_token = None
+        context['calendar_token'] = calendar_token
+        if calendar_token:
+            calendar_url = self.request.build_absolute_uri(
+                reverse('token_participation_calendar', args=[calendar_token.token])
+            )
+            context['calendar_url'] = calendar_url
+            context['calendar_webcal_url'] = calendar_url.replace('http://', 'webcal://', 1).replace('https://', 'webcal://', 1)
 
         return context
 

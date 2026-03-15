@@ -1,6 +1,5 @@
 from django.urls import include, path
 
-from shiftings.cal.feed.organization import OrganizationFeed
 from shiftings.organizations.views.organization import (
     OrganizationAdminView, OrganizationEditView, OrganizationListView, OrganizationSettingsView, OrganizationShiftsView,
     OwnOrganizationListView
@@ -17,8 +16,6 @@ urlpatterns = [
     path('<int:pk>/admin/', OrganizationAdminView.as_view(), name='organization_admin'),
     path('<int:pk>/settings/', OrganizationSettingsView.as_view(), name='organization_settings'),
     path('<int:pk>/update/', OrganizationEditView.as_view(), name='organization_update'),
-    # feed
-    path('<int:pk>/calendar/', OrganizationFeed(), name='organization_calendar'),
     path('<int:pk>/permission/', OrganizationParticipationPermissionEditView.as_view(),
          name='org_part_permissions_edit'),
 

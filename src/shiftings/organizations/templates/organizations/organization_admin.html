@@ -367,10 +367,6 @@
               {% trans "Claim Legacy Shifts" %}
             </a>
           {% endif %}
-          <a class="btn btn-success" href="{% url 'organization_calendar' organization.pk %}"
-             title="{% trans "ical Export" %}">
-            <i class="fas fa-file-export"></i>
-          </a>
           {% if org_perms.edit_shifts %}
             <a class="btn btn-success" href="{% url "shift_create" organization.pk %}"
                title="{% trans "Create Shift" %}">

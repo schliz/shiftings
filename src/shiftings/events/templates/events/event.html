@@ -68,9 +68,6 @@
     <div class="card-header center-items justify-content-between">
       <h5 class="m-0">{% trans "Shifts" %}</h5>
       <div>
-        <a class="btn btn-success" href="{% url 'event_calendar' event.pk %}" title="{% trans "ical Export" %}">
-          <i class="fas fa-file-export"></i> {% trans "ical Export" %}
-        </a>
         <a class="btn btn-success" href="{% url "shift_create" event.organization.pk %}" title="{% trans "Create Shift" %}">
           <i class="fa-solid fa-calendar-plus"></i>
         </a>
