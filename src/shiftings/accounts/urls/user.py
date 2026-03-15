@@ -6,9 +6,9 @@ from django.views.generic import TemplateView
 
 from shiftings.accounts.views.auth import UserLoginView, UserLogoutView, UserReLoginView
 from shiftings.accounts.views.password import PasswordResetConfirmView, PasswordResetView
+from shiftings.accounts.views.calendar_token import CalendarTokenCreateView, CalendarTokenDeleteView
 from shiftings.accounts.views.user import (ConfirmEMailView, UserDeleteSelfView, UserEditView, UserProfileView,
                                            UserRegisterView)
-from shiftings.cal.feed.user import OwnShiftsFeed, UserFeed
 from shiftings.utils.converters import AlphaNumericConverter
 
 register_converter(AlphaNumericConverter, 'uidb64')
@@ -28,8 +28,8 @@ urlpatterns: List[Any] = [
     path('password_reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('password_reset/success/', TemplateView.as_view(template_name='accounts/password_reset/success.html'),
          name='password_reset_success'),
-    path('calendar/', UserFeed(), name='user_calendar'),
-    path('participation_calendar/', OwnShiftsFeed(), name='user_participation_calendar'),
+    path('calendar_token/create/', CalendarTokenCreateView.as_view(), name='calendar_token_create'),
+    path('calendar_token/delete/', CalendarTokenDeleteView.as_view(), name='calendar_token_delete'),
 ]
 if settings.FEATURES.get('registration', False):
     urlpatterns.append(path('register/', UserRegisterView.as_view(), name='register'))
